@@ -9,29 +9,37 @@ fetch("http://localhost:3000/api/products/")
     }
   })
   .then((itemsList) => {
+    showItems(itemsList);
+  });
 
-    showItems (itemsList)});
-
+let grille = document.getElementById("items");
 function showItems(itemsList) {
-    //je créé via logiciel (plutot que par fichier .html une balise <a>).
-  //Tu ne peux voir les élements créé par le script qu'en inspectant la page, pas en faisant 'voir le code source"'
-  let a     = document.createElement("a"); //a est ma variable, "a" est une paramètre
-  let art   = document.createElement("article"); //art est ma variable, "article" est une paramètre
-  let img   = document.createElement("img");
-  let titre = document.createElement("h3");
-  let desc  = document.createElement("p");
-}
+  for (var i = 0; i < itemsList.length; i++) {
+    //Création des variables
+    let a = document.createElement("a");
+    let art = document.createElement("article");
+    let img = document.createElement("img");
+    let titre = document.createElement("h3");
+    let desc = document.createElement("p");
 
+    //tous les elements necessaires sont créés
+    //maintenant on ajoute le bon contenu à chaque élement
 
+    desc.appendChild(document.createTextNode(itemsList[i].description));
+    desc.setAttribute("class", "productDescription");
 
-console.log(showItems);
-if (showItems.ok) {
-  console.log("Yo");
-} else {
-  {
-    console.log("Erreur");
+    titre.appendChild(document.createTextNode(itemsList[i].name));
+    titre.setAttribute("class", "productName");
+
+    img.setAttribute("src", itemsList[i].imageUrl);
+    img.setAttribute("alt", itemsList[i].altTxt);
+
+    art.appendChild(img);
+    art.appendChild(titre);
+    art.appendChild(desc);
+    a.appendChild(art);
+    a.setAttribute("href", "./product.html?id=" + i);
+    grille.appendChild(a);
   }
 }
 
-let section = document.getElementById("items");
-console.log(section);
