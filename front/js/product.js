@@ -19,6 +19,6 @@ fetch("http://localhost:3000/api/products/")
   });
 
 function showItems(itemsList) {
-  let itemIMG;
-  let img;
+  let itemIMG = document.querySelector(".item__img");
+  let img = document.createElement("img");
 }
