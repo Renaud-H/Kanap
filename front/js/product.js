@@ -18,6 +18,7 @@ fetch("http://localhost:3000/api/products/")
     showItems(itemsList);
   });
 
-function showProduct(product) {
-
+function showItems(itemsList) {
+  let itemIMG;
+  let img;
 }
