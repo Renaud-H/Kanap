@@ -17,3 +17,7 @@ fetch("http://localhost:3000/api/products/")
   .then((itemsList) => {
     showItems(itemsList);
   });
+
+function showProduct(product) {
+
+}
