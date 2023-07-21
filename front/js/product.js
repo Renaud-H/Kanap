@@ -19,6 +19,13 @@ fetch("http://localhost:3000/api/products/")
   });
 
 function showItems(itemsList) {
+  //Création des variables
   let itemIMG = document.querySelector(".item__img");
   let img = document.createElement("img");
+  let title = document.getElementById("title");
+  let price = document.getElementById("price"); 
+  let description = document.getElementById("description");
+  let color = document.getElementById("colors");
+
 }
+
