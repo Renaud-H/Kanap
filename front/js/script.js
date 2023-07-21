@@ -15,7 +15,7 @@ fetch("http://localhost:3000/api/products/")
 let grille = document.getElementById("items");
 function showItems(itemsList) {
   for (var i = 0; i < itemsList.length; i++) {
-    //Création des variables
+    // Création des variables
     let a = document.createElement("a");
     let art = document.createElement("article");
     let img = document.createElement("img");
