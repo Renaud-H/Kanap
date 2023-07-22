@@ -15,11 +15,11 @@ fetch("http://localhost:3000/api/products/")
     }
   })
   .then((itemsList) => {
-    showItems(itemsList);
+    showItem(itemsList);
   });
 
 // Fonction 
-function showItems(itemsList) {
+function showItem(itemsList) {
   // Création des variables
   let itemImg = document.querySelector(".item__img");
   let img = document.createElement("img");
@@ -29,6 +29,11 @@ function showItems(itemsList) {
   let color = document.getElementById("colors");
 
   // Intégration dans le fichier HTML
-
+  itemImg.appendChild(img);
+  img.src = `${itemsList[id].imageUrl}`; 
+  title.innerText = `${itemsList[id].name}`;
+// add price
+  description.innerText = `${itemsList[id].description}`;
+// add color
 }
 

@@ -19,7 +19,7 @@ function showItems(itemsList) {
     let a = document.createElement("a");
     let art = document.createElement("article");
     let img = document.createElement("img");
-    let titre = document.createElement("h3");
+    let title = document.createElement("h3");
     let desc = document.createElement("p");
 
     //tous les elements necessaires sont créés
@@ -28,8 +28,8 @@ function showItems(itemsList) {
     desc.appendChild(document.createTextNode(itemsList[i].description));
     desc.setAttribute("class", "productDescription");
 
-    titre.appendChild(document.createTextNode(itemsList[i].name));
-    titre.setAttribute("class", "productName");
+    title.appendChild(document.createTextNode(itemsList[i].name));
+    title.setAttribute("class", "productName");
 
     img.setAttribute("src", itemsList[i].imageUrl);
     img.setAttribute("alt", itemsList[i].altTxt);
