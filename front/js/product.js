@@ -32,7 +32,7 @@ function showItem(itemsList) {
   itemImg.appendChild(img);
   img.src = `${itemsList[id].imageUrl}`; 
   title.innerText = `${itemsList[id].name}`;
-// add price
+  price.innerText = `${itemsList[id].price}`;
   description.innerText = `${itemsList[id].description}`;
 // add color
 }
