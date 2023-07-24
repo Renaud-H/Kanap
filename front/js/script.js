@@ -35,7 +35,7 @@ function showItems(itemsList) {
     img.setAttribute("alt", itemsList[i].altTxt);
 
     art.appendChild(img);
-    art.appendChild(titre);
+    art.appendChild(title);
     art.appendChild(desc);
     a.appendChild(art);
     a.setAttribute("href", "./product.html?id=" + i);

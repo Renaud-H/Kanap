@@ -18,22 +18,37 @@ fetch("http://localhost:3000/api/products/")
     showItem(itemsList);
   });
 
-// Fonction 
+// Fonction
 function showItem(itemsList) {
   // Création des variables
   let itemImg = document.querySelector(".item__img");
   let img = document.createElement("img");
   let title = document.getElementById("title");
-  let price = document.getElementById("price"); 
+  let price = document.getElementById("price");
   let description = document.getElementById("description");
-  let color = document.getElementById("colors");
+  let color_choice = document.getElementById("colors");
 
   // Intégration dans le fichier HTML
   itemImg.appendChild(img);
-  img.src = `${itemsList[id].imageUrl}`; 
+  img.src = `${itemsList[id].imageUrl}`;
   title.innerText = `${itemsList[id].name}`;
   price.innerText = `${itemsList[id].price}`;
   description.innerText = `${itemsList[id].description}`;
-// add color
+
+  console.log("Color choice");
+  console.log(color_choice);
+  console.log("itemsList[id].colors");
+  console.log(itemsList[id].colors);
+  // Boucle for pour choisir les couleurs
+  for (let colors in itemsList[id].colors) {
+    color_choice.innerHTML += `<option value="${itemsList[colors].colors}">${itemsList[colors].colors}</option>`;
+  }
 }
 
+function prim() {
+  let varPrim = document.getElementById("");
+}
+
+function sec() {
+  let varSec = document.getElementById("");
+}
