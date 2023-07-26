@@ -35,9 +35,9 @@ function showItem(itemsList) {
   price.innerText = `${itemsList[id].price}`;
   description.innerText = `${itemsList[id].description}`;
 
-  console.log("Color choice");
+  console.log("Ciblage du DOM");
   console.log(color_choice);
-  console.log("itemsList[id].colors");
+  console.log("Liste des Colors");
   console.log(itemsList[id].colors);
   // Boucle for pour choisir les couleurs
   for (let colors in itemsList[id].colors) {
@@ -45,10 +45,12 @@ function showItem(itemsList) {
   }
 }
 
-function prim() {
-  let varPrim = document.getElementById("");
+// Récupération des données saisies Quantité & Couleurs
+function Quantity() {
+  let quantity = document.getElementById("quantity");
+  return quantity.value;
 }
-
-function sec() {
-  let varSec = document.getElementById("");
+function Color() {
+  let color = document.getElementById("colors");
+  return color.value;
 }
