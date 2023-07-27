@@ -16,6 +16,7 @@ fetch("http://localhost:3000/api/products/")
   })
   .then((itemsList) => {
     showItem(itemsList);
+    console.log(itemsList);
   });
 
 // Fonction
@@ -40,17 +41,28 @@ function showItem(itemsList) {
   console.log("Liste des Colors");
   console.log(itemsList[id].colors);
   // Boucle for pour choisir les couleurs
-  for (let colors in itemsList[id].colors) {
-    color_choice.innerHTML += `<option value="${itemsList[colors].colors}">${itemsList[colors].colors}</option>`;
+
+  for (let color in itemsList[id].colors) {
+    color_choice.innerHTML += `<option value="${color}">${itemsList[id].colors[color]}</option>`;
+    // Option value = (mettre valeur numérique ou chaîne de caractère)
   }
 }
 
 // Récupération des données saisies Quantité & Couleurs
-function Quantity() {
-  let quantity = document.getElementById("quantity");
-  return quantity.value;
+function GetQuantity() {
+  return document.getElementById("quantity").value;
 }
-function Color() {
-  let color = document.getElementById("colors");
-  return color.value;
+function GetColor() {
+  return document.getElementById("colors").value ;
 }
+
+
+
+function AjouterPanier(){
+  // id  
+  let Q = GetQuantity();
+  let C = GetColor();
+}
+
+let BoutonPanier = document.getElementById("addToCart");
+BoutonPanier.addEventListener("click", AjouterPanier());
