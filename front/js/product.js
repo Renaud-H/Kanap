@@ -101,6 +101,7 @@ function controlerDonnees(id, quantity, color) {
   }
   return true;
 }
+
 // Enregistrement des données
 function enregistrerDonnees(id, quantity, color) {
   // Lire LocalStorage
@@ -108,22 +109,13 @@ function enregistrerDonnees(id, quantity, color) {
   variablePanier = JSON.parse(panierLocal);
   console.log("Lecture du Panier", variablePanier);
 
+  // Vérifier l'existence d'un Panier
   if (variablePanier == null) {
+    // Création de l'objet si vide
     variablePanier = [];
   }
 
-  console.log(variablePanier);
-
-  let ligne = dejaPresent(id, color);
-  if (ligne >= 0) {
-    variablePanier[ligne][1] = variablePanier[ligne][1] + quantity;
-  } else variablePanier.push([id, quantity, color]);
-
-  // Additionner les données
-
-  // Enregistrer LocalStorage
-  localStorage.setItem("Panier", JSON.stringify(variablePanier));
-
+  // Fusionner les données
   function dejaPresent(id, color) {
     let compteur = 0;
     for (let line in variablePanier) {
@@ -132,4 +124,13 @@ function enregistrerDonnees(id, quantity, color) {
     }
     return -1;
   }
+  let ligne = dejaPresent(id, color);
+  if (ligne >= 0) {
+    variablePanier[ligne][1] = variablePanier[ligne][1] + quantity;
+  } else variablePanier.push([id, quantity, color]);
+
+  // Enregistrer LocalStorage
+
+  console.log(variablePanier);
+  localStorage.setItem("Panier", JSON.stringify(variablePanier));
 }
