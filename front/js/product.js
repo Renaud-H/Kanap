@@ -121,7 +121,7 @@ function enregistrerDonnees(id, quantity, color) {
   window.localStorage.setItem("cart", JSON.stringify(currentValue));
 
   let inCart = false;
-for (const product of currentValue) {
+for (const product of value) {
   
   if (product.id === valueToAdd.id) {
     product.quantity += valueToAdd.quantity;
@@ -132,6 +132,6 @@ for (const product of currentValue) {
 
 if (!inCart) {
   // si le produit n'était pas dans le panier, alors il faut l'ajouter
-  currentValue.push(valueToAdd); 
+  value.push(valueToAdd); 
 }
 }
