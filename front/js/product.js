@@ -103,35 +103,28 @@ function controlerDonnees(id, quantity, color) {
 
 // Enregistrement des données
 function enregistrerDonnees(id, quantity, color) {
-
   // Récupération du panier, si la valeur n'exite pas, ça met un tableau vide par défaut
-  const currentValue = window.localStorage.getItem("cart") || "[]"; 
+  const currentValue = window.localStorage.getItem("cart") || "[]";
   // Décoder le local storage (ne supporte que des strings)
-  const value = JSON.parse(currentValue); 
-
-
-
+  const value = JSON.parse(currentValue);
 
   // Création de l'objet à ajouter
-  const valueToAdd = {id, quantity};
-
-
-
-  // Sauvegarde de la valeur en json dans le local storage
-  window.localStorage.setItem("cart", JSON.stringify(currentValue));
+  const valueToAdd = {id, quantity, color};
 
   let inCart = false;
-for (const product of value) {
-  
-  if (product.id === valueToAdd.id) {
-    product.quantity += valueToAdd.quantity;
-    inCart = true; // on note que le produit est dans le panier et qu'il a bien été mis à jour
-    break; // pas besoin de continuer à chercher
+  for (const product of value) {
+    if (product.id === valueToAdd.id && product.color === valueToAdd.color) {
+      product.quantity += valueToAdd.quantity;
+      inCart = true; // on note que le produit est dans le panier et qu'il a bien été mis à jour
+      break; // pas besoin de continuer à chercher
+    }
   }
-}
 
-if (!inCart) {
-  // si le produit n'était pas dans le panier, alors il faut l'ajouter
-  value.push(valueToAdd); 
-}
+  if (!inCart) {
+    // si le produit n'était pas dans le panier, alors il faut l'ajouter
+    value.push(valueToAdd);
+  }
+  // Sauvegarde de la valeur en json dans le local storage
+  window.localStorage.setItem("cart", JSON.stringify(value));
+
 }
