@@ -108,17 +108,17 @@ function enregistrerDonnees(id, quantity, color) {
   const currentValue = window.localStorage.getItem("cart") || "[]"; 
   // Décoder le local storage (ne supporte que des strings)
   const value = JSON.parse(currentValue); 
-  // Sauvegarde de la valeur en json dans le local storage
-  window.localStorage.setItem("cart", JSON.stringify(value));
+
+
 
 
   // Création de l'objet à ajouter
-  const valueToAdd = {product: "canapé", quantity: 5};
+  const valueToAdd = {id, quantity};
 
-  // Addition des données déjà présentes et des nouvelles données
-  const newValue = [...currentValue, valueToAdd];
 
-  window.localStorage.setItem("cart", newValue);
+
+  // Sauvegarde de la valeur en json dans le local storage
+  window.localStorage.setItem("cart", JSON.stringify(currentValue));
 
   let inCart = false;
 for (const product of currentValue) {
