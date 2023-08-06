@@ -1,4 +1,4 @@
-console.log("Product");
+console.log("Page du Produit");
 console.log(window.location.href);
 
 var str = window.location.href;
@@ -11,12 +11,11 @@ if (Number.isNaN(id)) {
   alert("Erreur, pas d'article sélectionné");
 }
 
-console.log(id);
-
 // Récupération depuis l'api
 fetch("http://localhost:3000/api/products/")
   .then(function (apiPromise) {
     if (apiPromise.ok) {
+      console.log("Réponse de l'API");
       return apiPromise.json();
     } else {
       console.log("Erreur sur la récupération de l'API");
@@ -27,7 +26,7 @@ fetch("http://localhost:3000/api/products/")
     console.log(itemsList);
   });
 
-// Fonction
+// Fonction affichage des données du produit
 function showItem(itemsList) {
   // Création des variables
   let itemImg = document.querySelector(".item__img");
@@ -52,22 +51,22 @@ function showItem(itemsList) {
 }
 
 // Récupération des données saisies Quantité & Couleurs
-function GetQuantity() {
+function getQuantity() {
   return document.getElementById("quantity").value;
 }
-function GetColor() {
+function getColor() {
   return document.getElementById("colors").value;
 }
 
 let boutonPanier = document.getElementById("addToCart");
-boutonPanier.addEventListener("click", AjouterPanier);
+boutonPanier.addEventListener("click", ajouterPanier);
 // AjouterPanier n'a pas de parenthèses car c'est le nom de la fonction que l'on passe en argument.
 
 // Enregistrement de l'article en cours dans le panier
-function AjouterPanier() {
+function ajouterPanier() {
   // id
-  let Q = GetQuantity();
-  let C = GetColor();
+  let Q = getQuantity();
+  let C = getColor();
   if (controlerDonnees(id, Q, C)) enregistrerDonnees(id, Q, C);
 }
 
@@ -104,33 +103,35 @@ function controlerDonnees(id, quantity, color) {
 
 // Enregistrement des données
 function enregistrerDonnees(id, quantity, color) {
-  // Lire LocalStorage
-  let panierLocal = localStorage.getItem("Panier");
-  variablePanier = JSON.parse(panierLocal);
-  console.log("Lecture du Panier", variablePanier);
 
-  // Vérifier l'existence d'un Panier
-  if (variablePanier == null) {
-    // Création de l'objet si vide
-    variablePanier = [];
+  // Récupération du panier, si la valeur n'exite pas, ça met un tableau vide par défaut
+  const currentValue = window.localStorage.getItem("cart") || "[]"; 
+  // Décoder le local storage (ne supporte que des strings)
+  const value = JSON.parse(currentValue); 
+  // Sauvegarde de la valeur en json dans le local storage
+  window.localStorage.setItem("cart", JSON.stringify(value));
+
+
+  // Création de l'objet à ajouter
+  const valueToAdd = {product: "canapé", quantity: 5};
+
+  // Addition des données déjà présentes et des nouvelles données
+  const newValue = [...currentValue, valueToAdd];
+
+  window.localStorage.setItem("cart", newValue);
+
+  let inCart = false;
+for (const product of currentValue) {
+  
+  if (product.id === valueToAdd.id) {
+    product.quantity += valueToAdd.quantity;
+    inCart = true; // on note que le produit est dans le panier et qu'il a bien été mis à jour
+    break; // pas besoin de continuer à chercher
   }
+}
 
-  // Fusionner les données
-  function dejaPresent(id, color) {
-    let compteur = 0;
-    for (let line in variablePanier) {
-      if (line[0] == id && line[2] == color) return compteur;
-      compteur++;
-    }
-    return -1;
-  }
-  let ligne = dejaPresent(id, color);
-  if (ligne >= 0) {
-    variablePanier[ligne][1] = variablePanier[ligne][1] + quantity;
-  } else variablePanier.push([id, quantity, color]);
-
-  // Enregistrer LocalStorage
-
-  console.log(variablePanier);
-  localStorage.setItem("Panier", JSON.stringify(variablePanier));
+if (!inCart) {
+  // si le produit n'était pas dans le panier, alors il faut l'ajouter
+  currentValue.push(valueToAdd); 
+}
 }
