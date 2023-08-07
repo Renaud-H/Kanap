@@ -111,6 +111,7 @@ function enregistrerDonnees(id, quantity, color) {
   // Création de l'objet à ajouter
   const valueToAdd = {id, quantity, color};
 
+  
   let inCart = false;
   for (const product of value) {
     if (product.id === valueToAdd.id && product.color === valueToAdd.color) {
