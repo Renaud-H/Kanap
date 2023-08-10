@@ -52,10 +52,10 @@ function showItem(itemsList) {
 
 // Récupération des données saisies Quantité & Couleurs
 function getQuantity() {
-  return document.getElementById("quantity").value;
+  return Number(document.getElementById("quantity").value);
 }
 function getColor() {
-  return document.getElementById("colors").value;
+  return Number(document.getElementById("colors").value);
 }
 
 let boutonPanier = document.getElementById("addToCart");
@@ -88,7 +88,7 @@ function controlerDonnees(id, quantity, color) {
     return false;
   }
   // Contrôle de la couleur
-  if (color == "") {
+  if (color === "") {
     alert("Veuillez saisir une couleur");
     return false;
   }
@@ -96,6 +96,7 @@ function controlerDonnees(id, quantity, color) {
     console.log("Contrôle de la couleur ok");
   } else {
     console.log("Le contrôle de la couleur n'est pas bon");
+    alert("Veuillez saisir une couleur");
     return false;
   }
   return true;
@@ -105,6 +106,7 @@ function controlerDonnees(id, quantity, color) {
 function enregistrerDonnees(id, quantity, color) {
   // Récupération du panier, si la valeur n'exite pas, ça met un tableau vide par défaut
   const currentValue = window.localStorage.getItem("cart") || "[]";
+  console.log(currentValue)
   // Décoder le local storage (ne supporte que des strings)
   const value = JSON.parse(currentValue);
 
@@ -114,8 +116,7 @@ function enregistrerDonnees(id, quantity, color) {
   // Fusion des données
   let inCart = false;
   for (const product of value) {
-    console.log (product); 
-    // Object { id: 0, quantity: "1211", color: "0" } 
+    // Object { id: 0, quantity: "1212", color: "0" } 
     if (product.id === valueToAdd.id && product.color === valueToAdd.color) {
       product.quantity += valueToAdd.quantity;
       inCart = true; // on note que le produit est dans le panier et qu'il a bien été mis à jour
