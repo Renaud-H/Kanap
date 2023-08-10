@@ -28,4 +28,19 @@ function showCart() {
         return 0;
     })
     console.log(cart);
+    // Boucle for pour chaques articles
+    for (let i = 0; i < cart.length; i++) {
+        let item = cart[i];
+        console.log(item.id);
+        // Récupération depuis l'api
+        fetch(`http://localhost:3000/api/products/${item.id}`)
+            .then((data) => data.json())
+            .then((product) => {
+
+                // showItem(product, item.quantity, item.color); // Fonction affichage de l'article
+                // showTotalPrice(); // Fonction affichage prix total des articles
+            })
+
+    }
+    // showTotalQuantity(); // Fonction affichage quantité totale d'articles
 }

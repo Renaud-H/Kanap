@@ -111,9 +111,11 @@ function enregistrerDonnees(id, quantity, color) {
   // Création de l'objet à ajouter
   const valueToAdd = {id, quantity, color};
 
-  
+  // Fusion des données
   let inCart = false;
   for (const product of value) {
+    console.log (product); 
+    // Object { id: 0, quantity: "1211", color: "0" } 
     if (product.id === valueToAdd.id && product.color === valueToAdd.color) {
       product.quantity += valueToAdd.quantity;
       inCart = true; // on note que le produit est dans le panier et qu'il a bien été mis à jour
