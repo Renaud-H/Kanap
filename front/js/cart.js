@@ -31,28 +31,38 @@ function showCart() {
     let item = cart[i];
     console.log(item.id);
     // Récupération du produit depuis l'api
-    fetch(`http://localhost:3000/api/products/${item.id}`)
+    fetch("http://localhost:3000/api/products/")
       .then((data) => data.json())
       .then((product) => {
         showItem(product, item.quantity, item.color); // Fonction affichage de l'article
-        // showTotalPrice(); // Fonction affichage prix total des articles
+        showTotalPrice(); // Fonction affichage prix total des articles
       });
   }
-  // showTotalQuantity(); // Fonction affichage quantité totale d'articles
-}
-// Affichage de l'article
-function showItem(item, quantity, color) {
-  console.log("Affichage des items");
-  // Création des variables
-  let sectionItems = document.getElementById("cart__items");
-  let article = document.createElement("article");
-  // Affichage du produit
-
+  showTotalQuantity(); // Fonction affichage quantité totale d'articles
 }
 
-function showTotalPrice() {
-  console.log("Affichage du prix");
+function showItem(){
+
 }
-function showTotalQuantity() {
-  console.log("Affichage de la quantité");
+function showTotalPrice(){
+
 }
+function showTotalQuantity(){
+
+}
+// // Affichage de l'article
+// function showItem(item, quantity, color) {
+//   console.log("Affichage des items");
+//   // Création des variables
+//   let sectionItems = document.getElementById("cart__items");
+//   let article = document.createElement("article");
+//   // Affichage du produit
+
+// }
+
+// function showTotalPrice() {
+//   console.log("Affichage du prix");
+// }
+// function showTotalQuantity() {
+//   console.log("Affichage de la quantité");
+// }
