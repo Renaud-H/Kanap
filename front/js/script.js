@@ -32,6 +32,7 @@ function showItems(itemsList) {
     title.setAttribute("class", "productName");
 
     img.setAttribute("src", itemsList[i].imageUrl);
+    //     img.src = `${item.imageUrl}`;
     img.setAttribute("alt", itemsList[i].altTxt);
 
     art.appendChild(img);

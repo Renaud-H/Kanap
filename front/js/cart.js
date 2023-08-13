@@ -42,7 +42,7 @@ function showCart() {
 }
 
 function showItem(){
-
+// voir structure sur script.js
 }
 function showTotalPrice(){
 
