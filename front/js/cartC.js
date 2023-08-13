@@ -127,28 +127,31 @@ function inject(cartLine, productData) {
 
 
 					//<input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
-					// addEventListener 
-					// Configuration de l'input de qantité
 					let settingsQuantityInput = document.createElement("input");
 					settingsQuantityInput.type = "number";
 					settingsQuantityInput.classList.add("itemQuantity")
 					settingsQuantityInput.name = "itemQuantity"
+					// Configuration de l'input de quantité
 					settingsQuantityInput.min = "1";
 					settingsQuantityInput.max = "100";
-					//affichage de la quantité
-					settingsQuantityInput.value = productData.quantity;
-					div_settings_quantity.appendChild(settingsQuantityInput);
-					//mise à jour du prix de l'article
-					settingsQuantityInput.addEventListener("input", () => { //lorsque la quantité est modifiée
-						modifyQuantity(productData._id,color,productData.price); //modification de l'artcicle
-						//mise à jour de la description de l'article
 
-						let newPrice = productData.price;									 // MODIFICATION
-						div_description.innerHTML = `<h2>${productData.name}</h2>
-						<p>${color}</p>
-						<p>${newPrice}</p>`;
+					// Affichage de la quantité
+
+					settingsQuantityInput.value = cartLine.quantity; 						// MODIFICATION
+
+					// Event Listener
+					settingsQuantityInput.addEventListener("input", () => {
+						// Lorsque la quantité est modifiée, appel à fonction modifyQuantity
+						modifyQuantity(productData._id,color,productData.price);
+
+
+							//mise à jour de la description de l'article
+
+							let newPrice = productData.price;									 // MODIFICATION
+
 					})
 
+				div_settings_quantity.appendChild(settingsQuantityInput);
 				//</div>
 				div_settings.appendChild(div_settings_quantity);
 
@@ -185,7 +188,7 @@ function inject(cartLine, productData) {
 
 
 
-// LIGNE 170 /!\ Récupération du panier depuis le localStorage
+// FONCTION /!\ Récupération du panier depuis le localStorage
 function getCart() {
   let cart = JSON.parse(localStorage.getItem("cart"));
   //si absence de panier, création d'un tableau vide
@@ -198,7 +201,7 @@ function getCart() {
 
 
 
-// LIGNE 180 /!\  Enregistrement des données
+// FONCTION /!\  Enregistrement des données
 function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
@@ -212,8 +215,11 @@ function getQuantity() {
 
 }
 
+// FONCTION /!\ Modification de la quantité
 function modifyQuantity(productData_id, color, productData_price){
+
 	let newQuantity = 1 ;  												// MODIFICATION
+
 		let cart = getCart(); //récupération du panier
 		//ciblage de l'article à modifier
 		const item = cart.find(item => (productData_id === item.productData_id && color === item.color));
@@ -221,13 +227,16 @@ function modifyQuantity(productData_id, color, productData_price){
 		//contrôle de la quantité
 		if (newQuantity <= 0 || newQuantity >= 101 || Number.isNaN(newQuantity)){
 			alert("saisie incorrecte");
-			document.querySelector(`article[data-id="${productData_id}"][data-color="${color}"]`).getElementsByTagName('input')[0].value = item.quantity;
+
+			document.querySelector(`article[data-id="${productData_id}"][data-color="${color}"]`).getElementsByTagName('input')[0].value = item.quantity;  // MODIFICATION
+
 		}
 		else{
+			
 			//mise à jour de la quantité
-
+			// item.quantity = newQuantity;
 			//mise à jour du prix
-
+			// newPrice = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(price * newQuantity);
 			
 			saveCart(cart); //enregistrement du panier
 			getPrice(); //affichage du prix total
