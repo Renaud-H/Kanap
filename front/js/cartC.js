@@ -244,3 +244,126 @@ function modifyQuantity(productData_id, color, productData_price){
 		}
 		console.log ("event")	
 	}
+
+// CONTRÔLES BOX
+
+// Check prénom
+function checkFirstName(){
+    // Get data
+    const firstName = document.getElementById("firstName").value;
+    const error = document.getElementById("firstNameErrorMsg");
+    // REGEX 
+    const regex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]+$/;
+
+    // Contrôle data = regex 
+    if(firstName.match(regex)){
+        error.innerText = "";
+        return true;
+    }
+    else{
+        error.innerText = "Champ invalide.";
+        return false;
+    }
+}
+document.getElementById("firstName").addEventListener("input", () => { // Event "input"
+    checkFirstName(); // Lancer le check 
+});
+// Check nom
+function checkLastName(){
+    // Get data
+    const lastName = document.getElementById("lastName").value;
+    const error = document.getElementById("lastNameErrorMsg");
+    // REGEX 
+    const regex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ -]+$/;
+
+    // Contrôle data = regex 
+    if(lastName.match(regex)){
+        error.innerText = "";
+        return true;
+    }
+    else{
+        error.innerText = "Champ invalide.";
+        return false;
+    }
+}
+document.getElementById("lastName").addEventListener("input", () => { // Event "input"
+    checkLastName();  // Lancer le check 
+});
+// Check adresse
+function checkAddress(){
+    // Get data
+    const address = document.getElementById("address").value;
+    const error = document.getElementById("addressErrorMsg");
+    // REGEX 
+    const regex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9999 -]+$/;
+
+    // Contrôle data = regex 
+    if(address.match(regex)){
+        error.innerText = "";
+        return true;
+    }
+    else{
+        error.innerText = "Champ invalide.";
+        return false;
+    }
+}
+document.getElementById("address").addEventListener("input", () => { // Event "input"
+    checkAddress();  // Lancer le check 
+});
+// Check ville
+function checkCity(){
+    // Get data
+    const city = document.getElementById("city").value;
+    const error = document.getElementById("cityErrorMsg");
+    // REGEX 
+    const regex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ -]+$/;
+
+    // Contrôle data = regex 
+    if(city.match(regex)){
+        error.innerText = "";
+        return true;
+    }
+    else{
+        error.innerText = "Champ invalide.";
+        return false;
+    }
+}
+document.getElementById("city").addEventListener("input", () => { // Event "input"
+    checkCity(); // Lancer le check 
+});
+
+// Check email
+function checkEmail(){
+    // Get data
+    const email = document.getElementById("email").value;
+    const error = document.getElementById("emailErrorMsg");
+    // REGEX 
+    const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    // Contrôle data = regex 
+    if(email.match(regex)){
+        error.innerText = "";
+        return true;
+    }
+    else{
+        error.innerText = "Champ invalide.";
+        return false;
+    }
+}
+document.getElementById("email").addEventListener("input", () => { // Event "input"
+    checkEmail();  // Lancer le check 
+});
+
+const order = document.getElementById("order");
+order.addEventListener("click", (e) => { //au clic
+    e.preventDefault(); 
+	// Si formulaire = true
+	if (checkFirstName() & checkLastName() & checkAddress() & checkCity() & checkEmail()){
+		// Créer objet contact
+		/* */
+		console.log("ok")
+	}   //sinon, message d'erreur
+		else{
+			window.alert("Veuillez remplir le formulaire.");
+		}
+});
