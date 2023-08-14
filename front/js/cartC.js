@@ -245,8 +245,10 @@ function modifyQuantity(productData_id, color, productData_price){
 		console.log ("event")	
 	}
 
-// CONTRÔLES BOX
 
+/* CHECK BOXES
+
+*/
 // Check prénom
 function checkFirstName(){
     // Get data
@@ -331,7 +333,6 @@ function checkCity(){
 document.getElementById("city").addEventListener("input", () => { // Event "input"
     checkCity(); // Lancer le check 
 });
-
 // Check email
 function checkEmail(){
     // Get data
@@ -354,6 +355,9 @@ document.getElementById("email").addEventListener("input", () => { // Event "inp
     checkEmail();  // Lancer le check 
 });
 
+
+
+// Formulaire
 const order = document.getElementById("order");
 order.addEventListener("click", (e) => { //au clic
     e.preventDefault(); 
