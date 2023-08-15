@@ -378,7 +378,7 @@ order.addEventListener("click", (e) => { //au clic
 		for (let i = 0; i < cart.length; i++) {
 			productsId.push(cart[i].id);
 		  }  	
-		// Crér l'objet "commande"
+		// Créer l'objet "commande"
 		let orderNew = {
 		contact: contact,
 		products: productsId,
