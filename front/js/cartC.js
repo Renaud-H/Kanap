@@ -361,11 +361,29 @@ document.getElementById("email").addEventListener("input", () => { // Event "inp
 const order = document.getElementById("order");
 order.addEventListener("click", (e) => { //au clic
     e.preventDefault(); 
+	let cart = getCart();
 	// Si formulaire = true
 	if (checkFirstName() & checkLastName() & checkAddress() & checkCity() & checkEmail()){
 		// Créer objet contact
-		/* */
-		console.log("ok")
+		let contact = {
+			firstName: document.getElementById("firstName").value,
+			lastName: document.getElementById("lastName").value,
+			address: document.getElementById("address").value,
+			city: document.getElementById("city").value,
+			email: document.getElementById("email").value,
+		  }
+		// Créer tableau produits
+		let productsId = [];
+		// Boucle for, ajout des IDs du panier dans le tableau
+		for (let i = 0; i < cart.length; i++) {
+			productsId.push(cart[i].id);
+		  }  	
+		// Crér l'objet "commande"
+		let orderNew = {
+		contact: contact,
+		products: productsId,
+		}
+		console.log(orderNew);
 	}   //sinon, message d'erreur
 		else{
 			window.alert("Veuillez remplir le formulaire.");
