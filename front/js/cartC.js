@@ -140,10 +140,11 @@ function inject(cartLine, productData) {
 					settingsQuantityInput.value = cartLine.quantity; 						// MODIFICATION
 
 					// Event Listener
-					settingsQuantityInput.addEventListener("input", () => {
+					settingsQuantityInput.addEventListener("input", (product) => {
 						// Lorsque la quantité est modifiée, appel à fonction modifyQuantity
-						modifyQuantity(productData._id,color,productData.price);
-
+						modifyQuantity(productData._id, productData.color, productData.quantity);
+						console.log(productData)
+						console.log(product)
 
 							//mise à jour de la description de l'article
 
@@ -216,13 +217,15 @@ function getQuantity() {
 }
 
 // FONCTION /!\ Modification de la quantité
-function modifyQuantity(productData_id, color, productData_price){
+function modifyQuantity(productData_id, color, productData_quantity){
 
-	let newQuantity = 1 ;  												// MODIFICATION
+	let newQuantity = productData_quantity ;  												// MODIFICATION
 
 		let cart = getCart(); //récupération du panier
 		//ciblage de l'article à modifier
-		const item = cart.find(item => (productData_id === item.productData_id && color === item.color));
+		const item = cart.find(item => (productData_id === item.productData_id && color === item.color)); // Refaire const item
+		console.log(item);
+		console.log(productData_id, color)
 		//récupération de la nouvelle quantité
 		//contrôle de la quantité
 		if (newQuantity <= 0 || newQuantity >= 101 || Number.isNaN(newQuantity)){
@@ -235,6 +238,8 @@ function modifyQuantity(productData_id, color, productData_price){
 			
 			//mise à jour de la quantité
 			// item.quantity = newQuantity;
+			console.log(item);
+			console.log(cart);
 			//mise à jour du prix
 			// newPrice = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(price * newQuantity);
 			
