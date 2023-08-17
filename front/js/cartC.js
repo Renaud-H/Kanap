@@ -33,13 +33,16 @@ function showCart(apiItems) {
   let cart = getCart();
 
   // Liste des éléments du panier
+
   for (let line of cart) {
     //console.log(line.id, line.color, line.quantity);
     console.log(apiItems[line.id].name);
     console.log(apiItems[line.id].colors[line.color]);
     console.log(apiItems[line.id].price);
-    inject(line, apiItems[line.id]);
+
+    injectDOM(line, apiItems[line.id]);
   }
+
 }
 
 /* INJECTION HTML = création dans le HTML des données
@@ -49,12 +52,12 @@ function showCart(apiItems) {
 	pb : quantité modifier / supprimer = fonction ou boucle ?
 
 */
-function inject(cartLine, productData) {
+function injectDOM(cartLine, productData) {
 
 	// html
 	// <section id="cart__items">
 	let container = document.getElementById("cart__items");
-	// let data_id = productData._id;
+	let data_id = productData._id;
 	let data_color = productData.colors[cartLine.color];
 	let data_price = productData.price;  // MODIFICATION
 	let name = productData.name;
@@ -142,13 +145,14 @@ function inject(cartLine, productData) {
 					// Event Listener
 					settingsQuantityInput.addEventListener("input", (product) => {
 						// Lorsque la quantité est modifiée, appel à fonction modifyQuantity
-						modifyQuantity(productData._id, productData.color, productData.quantity);
-						console.log(productData)
-						console.log(product)
+						let newQuantity = Number(product.data);
+						modifyQuantity(cartLine.id, cartLine.color, newQuantity);
+						console.log("data = nouvelle quantité de l'input", newQuantity)
+						console.log(newQuantity)
 
 							//mise à jour de la description de l'article
-
-							let newPrice = productData.price;									 // MODIFICATION
+							// Fonction modifyPrice
+							let newPrice = 1 ;									 // MODIFICATION prix actuel + ajout diff ou soustraction => faire un calcul de diff
 
 					})
 
@@ -217,18 +221,18 @@ function getQuantity() {
 }
 
 // FONCTION /!\ Modification de la quantité
-function modifyQuantity(productData_id, color, productData_quantity){
+function modifyQuantity(productData_id, color, newQuantity){
 
-	let newQuantity = productData_quantity ;  												// MODIFICATION
+	// let newQuantity = 1 ;  												// MODIFICATION
 
 		let cart = getCart(); //récupération du panier
 		//ciblage de l'article à modifier
-		const item = cart.find(item => (productData_id === item.productData_id && color === item.color)); // Refaire const item
-		console.log(item);
-		console.log(productData_id, color)
+		const item = cart.find(item => (productData_id === item.id && color === item.color)); // Refaire const item
+		console.log("item", item);
+		console.log("productdataid", productData_id, color)
 		//récupération de la nouvelle quantité
 		//contrôle de la quantité
-		if (newQuantity <= 0 || newQuantity >= 101 || Number.isNaN(newQuantity)){
+		if (Number.isNaN(newQuantity) || newQuantity <= 0 || newQuantity >= 101){
 			alert("saisie incorrecte");
 
 			document.querySelector(`article[data-id="${productData_id}"][data-color="${color}"]`).getElementsByTagName('input')[0].value = item.quantity;  // MODIFICATION
@@ -237,9 +241,10 @@ function modifyQuantity(productData_id, color, productData_quantity){
 		else{
 			
 			//mise à jour de la quantité
-			// item.quantity = newQuantity;
-			console.log(item);
-			console.log(cart);
+			item.quantity = newQuantity;
+			console.log("item si bon" , item);
+			console.log("cart", cart);
+			console.log(newQuantity);
 			//mise à jour du prix
 			// newPrice = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(price * newQuantity);
 			
@@ -394,3 +399,10 @@ order.addEventListener("click", (e) => { //au clic
 			window.alert("Veuillez remplir le formulaire.");
 		}
 });
+
+// let sum = 0
+// console.log("somme temporaire", sum)
+// sum = sum + apiItems[line.id].price * line.quantity;
+// console.log("somme finale", sum)
+// let price = document.getElementById("totalPrice");
+// price.innerText = sum
