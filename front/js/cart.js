@@ -28,9 +28,9 @@ function saveCart(cart) {
 */
 // Récupération depuis l'api						
 fetch("http://localhost:3000/api/products/")
-	.then(function (apiPromise) {
-	  if (apiPromise.ok) {
-		return apiPromise.json();
+	.then(function (apiResponse) {
+	  if (apiResponse.ok) {
+		return apiResponse.json();
 	  } else {
 		console.log("Erreur");
 	  }
@@ -40,6 +40,25 @@ fetch("http://localhost:3000/api/products/")
 	}); 
 //
 
+async function getApiPrices(){
+	let apiResponse = await fetch("http://localhost:3000/api/products/")
+	if (apiResponse.ok) {
+		let itemsList = await apiResponse.json();
+		let prices = [];
+		for (let product of itemsList) {
+			let productdata = {"id":product._id, "price":product.price}
+			prices.push(productdata)
+		}
+		console.log("tablea", prices)
+		return prices;
+	}
+}
+async function getTotalprice(){
+	// 
+	// 
+	// 
+	// 
+}
 
 
 /* TRAVAIL DES DONNÉES DE L'API, renvoie vers GETCART et renvoie vers INJECT
@@ -78,21 +97,7 @@ function showCart(apiItems) {
 
 
 
-
-
-
-
-
-
-
-
-/* INJECTION HTML = création dans le HTML des données
-
-	il manque des choses avec // MODIFICATION
-	pb : prix = fonction ou boucle ?
-	pb : quantité supprimer = fonction ou boucle ?
-
-*/
+// INJECTION HTML = création dans le HTML des données
 function injectDOM(cartLine, productData) {
 
 	// html
@@ -174,7 +179,6 @@ function injectDOM(cartLine, productData) {
 					settingsQuantityInput.addEventListener("input", (product) => {
 						// Lorsque la quantité est modifiée, appel à fonction modifyQuantity
 						let newQuantity = Number(product.data);
-						// let newPrice = modifyPrice();
 						modifyQuantity(cartLine.id, cartLine.color, newQuantity);
 						console.log("Appel de la fonction modifyQuantity terminé, données de newQuantity : ", newQuantity)
 
@@ -243,9 +247,6 @@ function injectDOM(cartLine, productData) {
 
 
 
-
-
-
 // FONCTION /!\ Modification de la quantité
 function modifyQuantity(productData_id, color, newQuantity){
 		let cart = getCart(); //récupération du panier
@@ -274,7 +275,7 @@ function modifyQuantity(productData_id, color, newQuantity){
 //FONCTION /!\ Supprimer l'article
 function deleteItem(id, color) {
 
-	let deleteItem = document.querySelector(`article[data-id="${id}"][data-color="${color}"]`);
+	let deleteLine = document.querySelector(`article[data-id="${id}"][data-color="${color}"]`);
     let cart = getCart(); 
     //ciblage de l'article à supprimer
 	console.log(cart);
@@ -284,11 +285,16 @@ function deleteItem(id, color) {
 
 	return;
     //suppression de l'article dans le panier
-
+	for (let i = 0; i < cart.lenght; i ++) {
+		if (cart[i].id == id && cart[i].color == color){
+			cart.splice(i, 1);
+			break;
+		}
+	}
 
 	// cart.splice(item, 1);
   // localStorage.setItem('cart', JSON.stringify(cart));
-	deleteItem.remove(); //suppression dans le DOM
+	deleteLine.remove(); //suppression dans le DOM
 	saveCart(cart); //enregistrement du panier
 	// showCart();
     return;
