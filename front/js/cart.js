@@ -286,10 +286,11 @@ function deleteItem(id, color) {
     //suppression de l'article dans le panier
 
 
-	// cart.splice(index, 1);
+	// cart.splice(item, 1);
+  // localStorage.setItem('cart', JSON.stringify(cart));
 	deleteItem.remove(); //suppression dans le DOM
 	saveCart(cart); //enregistrement du panier
-	showCart();
+	// showCart();
     return;
 }
 
