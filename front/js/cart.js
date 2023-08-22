@@ -37,6 +37,7 @@ fetch("http://localhost:3000/api/products/")
 	})
 	.then((itemsList) => {
 	  showCart(itemsList);
+	  showPrice();
 	}); 
 //
 
@@ -49,12 +50,12 @@ async function getApiPrices(){
 			let productdata = {"id":product._id, "price":product.price}
 			prices.push(productdata)
 		}
-		console.log("tablea", prices)
+		console.log("Liste des produits et de leur prix", prices)
 		return prices;
 	}
 }
-async function getTotalprice(){
-	// 
+async function showPrice(){
+	console.log("Total Price :")
 	// 
 	// 
 	// 
@@ -181,6 +182,7 @@ function injectDOM(cartLine, productData) {
 						let newQuantity = Number(product.data);
 						modifyQuantity(cartLine.id, cartLine.color, newQuantity);
 						console.log("Appel de la fonction modifyQuantity terminé, données de newQuantity : ", newQuantity)
+						getApiPrices();
 
 
 						// modifyPrice(newQuantity, data_price);
