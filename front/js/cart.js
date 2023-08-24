@@ -78,6 +78,12 @@ async function showPrice() {
 	}
     
     console.log("Total Price :", total);
+
+	// Ajout dans le DOM de la quantité et du prix
+	let totalQuantity = document.getElementById("totalQuantity")
+	totalQuantity.innerHTML = cart.length;
+	let spanPrice = document.getElementById("totalPrice");
+	spanPrice.innerHTML = total;
 }
 
 
@@ -427,34 +433,64 @@ document.getElementById("email").addEventListener("input", () => { // Event "inp
 });
 // Formulaire
 const order = document.getElementById("order");
-order.addEventListener("click", (e) => { //au clic
-    e.preventDefault(); 
-	let cart = getCart();
-	// Si formulaire = true
-	if (checkFirstName() & checkLastName() & checkAddress() & checkCity() & checkEmail()){
-		// Créer objet contact
-		let contact = {
-			firstName: document.getElementById("firstName").value,
-			lastName: document.getElementById("lastName").value,
-			address: document.getElementById("address").value,
-			city: document.getElementById("city").value,
-			email: document.getElementById("email").value,
-		  }
-		// Créer tableau produits
-		let productsId = [];
-		// Boucle for, ajout des IDs du panier dans le tableau
-		for (let i = 0; i < cart.length; i++) {
-			productsId.push(cart[i].id);
-		  }  	
-		// Créer l'objet "commande"
-		let orderNew = {
-		contact: contact,
-		products: productsId,
-		}
-		console.log(orderNew);
-	}   //sinon, message d'erreur
-		else{
-			window.alert("Veuillez remplir le formulaire.");
-		}
+order.addEventListener("click", async (e) => { // Au clic
+    e.preventDefault();
+    let cart = getCart();
+
+    // Vérifier si le panier est vide
+    if (!cart || cart.length === 0) {
+        window.alert("Votre panier est vide !");
+        return;
+    }
+	// Effectuer les vérifications de validation du formulaire
+    if (!checkFirstName() || !checkLastName() || !checkAddress() || !checkCity() || !checkEmail()) {
+        window.alert("Veuillez remplir correctement tous les champs du formulaire.");
+        return;
+    }
+    // Créer l'objet contact
+    let contact = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        email: document.getElementById("email").value,
+    };
+	console.log("Formulaire contact", contact)
+	// Créer tableau produits
+	let productsId = [];
+	// Boucle for, ajout des IDs du panier dans le tableau
+	for (let i = 0; i < cart.length; i++) {
+		productsId.push(cart[i].id);
+	}  	
+	console.log("Tableau des produits", productsId);
+    // Créer l'objet "commande"
+    let orderData = {
+        contact: contact,
+        products: productsId,
+    };
+	console.log("Commande :", orderData);
+    try {
+        // Envoi de la commande au serveur
+		console.log("Try fetch");
+        let response = await fetch("http://localhost:3000/api/products/order", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+			console.log(" if Response.ok");
+            let order = await response.json();
+            // Rediriger vers la page de confirmation avec l'ID de la commande
+            window.location.href = `confirmation.html?id=${order.orderId}`;
+        } else {
+            console.log("Erreur lors de la soumission de la commande.");
+        }
+    } catch (error) {
+        console.error("Une erreur s'est produite :", error);
+    }
 });
 

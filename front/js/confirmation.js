@@ -9,4 +9,4 @@ const orderId = document.getElementById("orderId");
 orderId.innerText = id;
 
 //suppression du panier
-localStorage.removeItem("cart");
+// localStorage.removeItem("cart");
