@@ -41,31 +41,37 @@ fetch("http://localhost:3000/api/products/")
 	}); 
 //
 
-async function getApiPrices(){
-	let apiResponse = await fetch("http://localhost:3000/api/products/")
-	if (apiResponse.ok) {
-		let itemsList = await apiResponse.json();
-		let prices = [];
-		for (let product of itemsList) {
-			let productdata = {"id":product._id, "price":product.price}
-			prices.push(productdata)
-		}
-		console.log("Liste des produits et de leur prix", prices)
-		return prices;
-	}
+async function getApiPrices() {
+    let apiResponse = await fetch("http://localhost:3000/api/products/");
+    if (apiResponse.ok) {
+        let itemsList = await apiResponse.json();
+        let prices = [];
+
+        for (let index = 0; index < itemsList.length; index++) {
+            let product = itemsList[index];
+            for (let colorIndex = 0; colorIndex < product.colors.length; colorIndex++) {
+                let productdata = {
+                    "index": index,
+                    "id": product._id,
+                    "price": product.price,
+                    "color": colorIndex // Ajout de la couleur
+                };
+                prices.push(productdata);
+            }
+        }
+
+        console.log("Liste des produits et leur prix", prices);
+        return prices;
+    }
 }
-async function showPrice(){
-	console.log("Total Price :")
-	// 
-	// 
-	// 
+async function showPrice() {
+
+    console.log("Total Price :", total);
+
 }
 
 
 /* TRAVAIL DES DONNÉES DE L'API, renvoie vers GETCART et renvoie vers INJECT
-
-
-
 */
 function showCart(apiItems) {
   console.log("Liste des produits", apiItems);
@@ -183,9 +189,7 @@ function injectDOM(cartLine, productData) {
 						modifyQuantity(cartLine.id, cartLine.color, newQuantity);
 						console.log("Appel de la fonction modifyQuantity terminé, données de newQuantity : ", newQuantity)
 						getApiPrices();
-
-
-						// modifyPrice(newQuantity, data_price);
+						showPrice();
 
 					})
 				div_settings_quantity.appendChild(settingsQuantityInput);
@@ -205,7 +209,8 @@ function injectDOM(cartLine, productData) {
 						div_settings_delete_p.addEventListener("click", () => { 
 							// Appel à deleteItem
 							deleteItem(cartLine.id,cartLine.color);
-
+							getApiPrices();
+							showPrice();
 							})
 
 
@@ -282,23 +287,19 @@ function deleteItem(id, color) {
     //ciblage de l'article à supprimer
 	console.log(cart);
 	const item = cart.find(item => (id === item.id && color === item.color));
-	console.log(item);
-	console.log(deleteItem);
+	console.log("Article supprimé: ", item);
 
-	return;
     //suppression de l'article dans le panier
-	for (let i = 0; i < cart.lenght; i ++) {
+	for (let i = 0; i < cart.length; i ++) {
 		if (cart[i].id == id && cart[i].color == color){
 			cart.splice(i, 1);
 			break;
 		}
 	}
 
-	// cart.splice(item, 1);
-  // localStorage.setItem('cart', JSON.stringify(cart));
-	deleteLine.remove(); //suppression dans le DOM
+	 //suppression dans le DOM
+	deleteLine.remove();
 	saveCart(cart); //enregistrement du panier
-	// showCart();
     return;
 }
 
