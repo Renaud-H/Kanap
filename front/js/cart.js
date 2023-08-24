@@ -65,9 +65,19 @@ async function getApiPrices() {
     }
 }
 async function showPrice() {
-
+    let cart = getCart();
+    let total = 0;
+    const allProducts = await getApiPrices();
+    
+	for (const productInCart of cart) {
+		for (const product of allProducts) {
+			if (productInCart.id === product.index && productInCart.color === product.color) {
+				total = total + product.price * productInCart.quantity;
+			}
+		}
+	}
+    
     console.log("Total Price :", total);
-
 }
 
 
