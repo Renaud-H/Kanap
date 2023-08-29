@@ -1,6 +1,8 @@
 console.log("Page panier");
 
 
+let productsData = []; // Variable pour stocker les données des produits
+
 // FONCTION /!\ Récupération du panier depuis le localStorage
 function getCart() {
 	let cart = JSON.parse(localStorage.getItem("cart"));
@@ -44,11 +46,11 @@ fetch("http://localhost:3000/api/products/")
 async function getApiPrices() {
     let apiResponse = await fetch("http://localhost:3000/api/products/");
     if (apiResponse.ok) {
-        let itemsList = await apiResponse.json();
+        productsData = await apiResponse.json(); // Stockage des données des produits
         let prices = [];
 
-        for (let index = 0; index < itemsList.length; index++) {
-            let product = itemsList[index];
+        for (let index = 0; index < productsData.length; index++) {
+            let product = productsData[index];
             for (let colorIndex = 0; colorIndex < product.colors.length; colorIndex++) {
                 let productdata = {
                     "index": index,
@@ -64,6 +66,7 @@ async function getApiPrices() {
         return prices;
     }
 }
+
 async function showPrice() {
     let cart = getCart();
     let total = 0;
@@ -460,21 +463,25 @@ order.addEventListener("click", async (e) => { // Au clic
 	let productsId = [];
 	// Boucle for, ajout des IDs du panier dans le tableau
 	for (let i = 0; i < cart.length; i++) {
-		productsId.push(cart[i].id);
-	}  	
+		const cartItem = cart[i];
+		const product = productsData.find(p => p._id === cartItem.id);
+		if (product) {
+			productsId.push(product._id);
+			}
+  }
 	console.log("Tableau des produits", productsId);
     // Créer l'objet "commande"
-    let orderData = {
+    let orderId = {
         contact: contact,
         products: productsId,
     };
-	console.log("Commande :", orderData);
+	console.log("Commande :", orderId);
     try {
         // Envoi de la commande au serveur
 		console.log("Try fetch");
         let response = await fetch("http://localhost:3000/api/products/order", {
             method: "POST",
-            body: JSON.stringify(orderData),
+            body: JSON.stringify(orderId),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
