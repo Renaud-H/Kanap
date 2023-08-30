@@ -31,6 +31,7 @@ function showItem(itemsList) {
   // Création des variables
   let itemImg = document.querySelector(".item__img");
   let img = document.createElement("img");
+  img.alt = itemsList[id].altTxt;
   let title = document.getElementById("title");
   let price = document.getElementById("price");
   let description = document.getElementById("description");
