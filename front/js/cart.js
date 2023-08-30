@@ -173,7 +173,7 @@ function injectDOM(cartLine, productData) {
 				div_description.appendChild(div_description_p_color);
 				//<p>42,00 €</p>
 				let div_description_p_price = document.createElement("p");
-				div_description_p_price.innerText = data_price;  // Prix ici
+				div_description_p_price.innerText = data_price + " €";  // Prix ici
 				div_description.appendChild(div_description_p_price);
 			//</div>
 			div_content.appendChild(div_description);
