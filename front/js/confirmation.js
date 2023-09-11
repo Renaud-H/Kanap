@@ -1,5 +1,3 @@
-console.log("Confirmation");
-
 //récupération de l'orderId depuis l'url de la page
 let url = new URL(window.location)
 let id = url.searchParams.get("id")

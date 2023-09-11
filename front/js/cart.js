@@ -1,6 +1,3 @@
-console.log("Page panier");
-
-
 let productsData = []; // Variable pour stocker les données des produits
 
 // FONCTION /!\ Récupération du panier depuis le localStorage
@@ -10,7 +7,6 @@ function getCart() {
 	if (cart == null) {
 	  cart = [];
 	}
-	console.log("Contenu du panier",cart);
 	return cart;
 }
 
@@ -34,7 +30,6 @@ fetch("http://localhost:3000/api/products/")
 	  if (apiResponse.ok) {
 		return apiResponse.json();
 	  } else {
-		console.log("Erreur");
 	  }
 	})
 	.then((itemsList) => {
@@ -61,8 +56,6 @@ async function getApiPrices() {
                 prices.push(productdata);
             }
         }
-
-        console.log("Liste des produits et leur prix", prices);
         return prices;
     }
 }
@@ -79,9 +72,6 @@ async function showPrice() {
 			}
 		}
 	}
-    
-    console.log("Total Price :", total);
-
 	// Ajout dans le DOM de la quantité et du prix
 	let totalQuantity = document.getElementById("totalQuantity")
 	totalQuantity.innerHTML = cart.length;
@@ -93,17 +83,10 @@ async function showPrice() {
 /* TRAVAIL DES DONNÉES DE L'API, renvoie vers GETCART et renvoie vers INJECT
 */
 function showCart(apiItems) {
-  console.log("Liste des produits", apiItems);
   let cart = getCart();
   // Liste des éléments du panier
 
   for (let line of cart) {
-
-    // console.log(line.id, line.color, line.quantity);
-    // console.log(apiItems[line.id].name);
-    // console.log(apiItems[line.id].colors[line.color]);
-    // console.log("prix du produit traité", apiItems[line.id].price);
-
     injectDOM(line, apiItems[line.id]);
   }
 }
@@ -206,7 +189,6 @@ function injectDOM(cartLine, productData) {
 						// Lorsque la quantité est modifiée, appel à fonction modifyQuantity
 						let newQuantity = Number(product.data);
 						modifyQuantity(cartLine.id, cartLine.color, newQuantity);
-						console.log("Appel de la fonction modifyQuantity terminé, données de newQuantity : ", newQuantity)
 						getApiPrices();
 						showPrice();
 
@@ -278,8 +260,6 @@ function modifyQuantity(productData_id, color, newQuantity){
 		let cart = getCart(); //récupération du panier
 		//ciblage de l'article à modifier
 		const item = cart.find(item => (productData_id === item.id && color === item.color)); // Refaire const item
-		console.log("Objet modifié :", item);
-		console.log("Nouvelle quantité", newQuantity)
 		//récupération de la nouvelle quantité
 		//contrôle de la quantité
 		if (Number.isNaN(newQuantity) || newQuantity <= 0 || newQuantity >= 101){
@@ -289,12 +269,9 @@ function modifyQuantity(productData_id, color, newQuantity){
 		else{
 			//mise à jour de la quantité
 			item.quantity = newQuantity;
-			console.log("Fonction modify quantity, log cart", cart);
-			console.log("Nouvelle quantité", newQuantity);
 			//enregistrement du panier
 			saveCart(cart); 
 		}
-		console.log ("Modification de la quantité effectuée avec succès");	
 	}
 
 
@@ -304,9 +281,7 @@ function deleteItem(id, color) {
 	let deleteLine = document.querySelector(`article[data-id="${id}"][data-color="${color}"]`);
     let cart = getCart(); 
     //ciblage de l'article à supprimer
-	console.log(cart);
 	const item = cart.find(item => (id === item.id && color === item.color));
-	console.log("Article supprimé: ", item);
 
     //suppression de l'article dans le panier
 	for (let i = 0; i < cart.length; i ++) {
@@ -458,7 +433,6 @@ order.addEventListener("click", async (e) => { // Au clic
         city: document.getElementById("city").value,
         email: document.getElementById("email").value,
     };
-	console.log("Formulaire contact", contact)
 	// Créer tableau produits
 	let productsId = [];
 	// Boucle for, ajout des IDs du panier dans le tableau
@@ -469,16 +443,13 @@ order.addEventListener("click", async (e) => { // Au clic
 			productsId.push(product._id);
 			}
   }
-	console.log("Tableau des produits", productsId);
     // Créer l'objet "commande"
     let orderId = {
         contact: contact,
         products: productsId,
     };
-	console.log("Commande :", orderId);
     try {
         // Envoi de la commande au serveur
-		console.log("Try fetch");
         let response = await fetch("http://localhost:3000/api/products/order", {
             method: "POST",
             body: JSON.stringify(orderId),
@@ -489,15 +460,12 @@ order.addEventListener("click", async (e) => { // Au clic
         });
 
         if (response.ok) {
-			console.log(" if Response.ok");
             let order = await response.json();
             // Rediriger vers la page de confirmation avec l'ID de la commande
             window.location.href = `confirmation.html?id=${order.orderId}`;
         } else {
-            console.log("Erreur lors de la soumission de la commande.");
         }
     } catch (error) {
-        console.error("Une erreur s'est produite :", error);
     }
 });
 

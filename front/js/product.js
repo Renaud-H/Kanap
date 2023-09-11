@@ -1,6 +1,3 @@
-console.log("Page du Produit");
-console.log(window.location.href);
-
 var str = window.location.href;
 var url = new URL(str);
 var id = url.searchParams.get("id");
@@ -15,15 +12,12 @@ if (Number.isNaN(id)) {
 fetch("http://localhost:3000/api/products/")
   .then(function (apiPromise) {
     if (apiPromise.ok) {
-      console.log("Réponse de l'API");
       return apiPromise.json();
     } else {
-      console.log("Erreur sur la récupération de l'API");
     }
   })
   .then((itemsList) => {
     showItem(itemsList);
-    console.log(itemsList);
   });
 
 // Fonction affichage des données du produit
@@ -75,17 +69,14 @@ function ajouterPanier() {
 function controlerDonnees(id, quantity, color) {
   // Contrôle de l'id
   if (id >= 0) {
-    console.log("Contrôle de l'ID ok");
   } else {
-    console.log("Le contrôle de l'ID n'est pas bon");
     return false;
   }
   // Contrôle de la quantité
   if (Number.isNaN(quantity)) return false;
   if (quantity > 0 && quantity < 101) {
-    console.log("Contrôle de la quantité ok");
   } else {
-    alert("Veuillez saisir une quantité");
+    alert("Veuillez saisir une quantité entre 1 et 100");
     return false;
   }
   // Contrôle de la couleur
@@ -94,9 +85,7 @@ function controlerDonnees(id, quantity, color) {
     return false;
   }
   if (color >= 0) {
-    console.log("Contrôle de la couleur ok");
   } else {
-    console.log("Le contrôle de la couleur n'est pas bon");
     alert("Veuillez saisir une couleur");
     return false;
   }
@@ -107,7 +96,6 @@ function controlerDonnees(id, quantity, color) {
 function enregistrerDonnees(id, quantity, color) {
   // Récupération du panier, si la valeur n'exite pas, ça met un tableau vide par défaut
   const currentValue = window.localStorage.getItem("cart") || "[]";
-  console.log(currentValue)
   // Décoder le local storage (ne supporte que des strings)
   const value = JSON.parse(currentValue);
 
