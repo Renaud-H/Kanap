@@ -184,10 +184,10 @@ function injectDOM(cartLine, productData) {
 
 
 
-					// Event Listener
+					// Event Listener modification quantité
 					settingsQuantityInput.addEventListener("input", (product) => {
 						// Lorsque la quantité est modifiée, appel à fonction modifyQuantity
-						let newQuantity = Number(product.data);
+						let newQuantity = parseInt(product.target.value, 10);
 						modifyQuantity(cartLine.id, cartLine.color, newQuantity);
 						getApiPrices();
 						showPrice();
@@ -206,7 +206,7 @@ function injectDOM(cartLine, productData) {
 
 
 
-						// Event Listener
+						// Event Listener suppression d'article
 						div_settings_delete_p.addEventListener("click", () => { 
 							// Appel à deleteItem
 							deleteItem(cartLine.id,cartLine.color);
@@ -263,7 +263,7 @@ function modifyQuantity(productData_id, color, newQuantity){
 		//récupération de la nouvelle quantité
 		//contrôle de la quantité
 		if (Number.isNaN(newQuantity) || newQuantity <= 0 || newQuantity >= 101){
-			alert("saisie incorrecte");
+			alert("Veuillez saisir un nombre entre 1 et 100 ou supprimez l'article");
 			document.querySelector(`article[data-id="${productData_id}"][data-color="${color}"]`).getElementsByTagName('input')[0].value = item.quantity;  // MODIFICATION
 		}
 		else{
